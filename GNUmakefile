@@ -124,8 +124,8 @@ ifneq (,$(findstring $(F90), ifort gfortran nag nagfor pgfortran xlf))
      COMPILER=PGI
   else ifneq (,$(findstring $(F90),xlf))
      COMPILER=IBM
-	else
-		COMPILER=UNKNOWN
+  else
+     COMPILER=UNKNOWN
   endif
 # Override F90_VENDOR with COMPILER
 	F90_VENDOR=$(COMPILER)
@@ -140,6 +140,8 @@ else # use F90_VENDOR to specify
     COMPILER=PGI
   else ifneq (,$(findstring $(F90_VENDOR),ibm IBM xlf XLF))
     COMPILER=IBM
+  else ifneq (,$(findstring $(F90_VENDOR),cray CRAY cce CCE))
+    COMPILER=CRAY
   endif
 endif
 
