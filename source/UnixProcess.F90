@@ -7,17 +7,17 @@
 !! <BriefDescription>
 !!
 !! @author
-!! Tom Clune, NASA/GSFC 
+!! Tom Clune, NASA/GSFC
 !!
 !! @date
 !! 07 Nov 2013
-!! 
+!!
 !! @note <A note here.>
 !! <Or starting here...>
 !
 ! REVISION HISTORY:
 !
-! 07 Nov 2013 - Added the prologue for the compliance with Doxygen. 
+! 07 Nov 2013 - Added the prologue for the compliance with Doxygen.
 !
 !-------------------------------------------------------------------------------
 ! This module encapsulates the ability to issue background system commands
@@ -43,10 +43,10 @@ module UnixProcess_mod
    private
 
    public :: UnixProcess
-#if defined(Intel) || defined(PGI)
+#if defined(INTEL) || defined(PGI)
    public :: execute_command_line
 #endif
-   
+
 
    type UnixProcess
       private
@@ -125,13 +125,13 @@ contains
 
    logical function isActive(this)
       class (UnixProcess), intent(in) :: this
-      
+
       integer, parameter :: MAX_LEN = 40
       character(len=MAX_LEN) :: command
       integer :: stat, cstat
 
       !print *,'z02000',this%pid
-      
+
       if (this%pid >=0) then
          write(command, '("kill -0 ",i0," > /dev/null 2>&1")') this%pid
          call execute_command_line(command, exitStat=stat, cmdStat=cstat)
@@ -151,7 +151,7 @@ contains
       integer :: stat, cstat
 
       if (this%pid >=0) then
-         write(command,'(a,i0,a)') "kill -15 `ps -ef 2> /dev/null | awk '$3 == ",this%pid," {print $2}'` > /dev/null 2>&1" 
+         write(command,'(a,i0,a)') "kill -15 `ps -ef 2> /dev/null | awk '$3 == ",this%pid," {print $2}'` > /dev/null 2>&1"
          call execute_command_line(command, exitStat=stat, cmdStat=cstat)
          write(command, '("kill -15 ",i0," > /dev/null 2>&1; ")') this%pid
          call execute_command_line(command, exitStat=stat, cmdStat=cstat)
@@ -222,9 +222,9 @@ contains
    end function getPid
 
 
-#if defined(Intel) || defined(PGI)
+#if defined(INTEL) || defined(PGI)
    subroutine execute_command_line(command, exitStat, cmdStat)
-#if defined(Intel)
+#if defined(INTEL)
       use ifport
       implicit none
 #else
@@ -244,5 +244,5 @@ contains
 
    end subroutine execute_command_line
 #endif
-   
+
 end module UnixProcess_mod

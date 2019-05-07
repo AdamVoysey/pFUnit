@@ -20,12 +20,12 @@ project (pFUnit
     LANGUAGES Fortran)
 #enable_language (Fortran)
 
-# MESSAGE(ENV{PFUNIT}:"$ENV{PFUNIT}") 
+# MESSAGE(ENV{PFUNIT}:"$ENV{PFUNIT}")
 # set (ENV_PFUNIT "$ENV{PFUNIT}")
-# MESSAGE(OK:"${ENV_PFUNIT}") 
-# OPTION(INSTALL_PATH "Use PFUNIT for development" "$ENV{PFUNIT}")  
-# OPTION(INSTALL_PATH "Use PFUNIT for development" "${ENV_PFUNIT}")  
-OPTION(INSTALL_PATH "Use PFUNIT for development" OFF) 
+# MESSAGE(OK:"${ENV_PFUNIT}")
+# OPTION(INSTALL_PATH "Use PFUNIT for development" "$ENV{PFUNIT}")
+# OPTION(INSTALL_PATH "Use PFUNIT for development" "${ENV_PFUNIT}")
+OPTION(INSTALL_PATH "Use PFUNIT for development" OFF)
 IF(NOT INSTALL_PATH)
    IF(DEFINED ENV{PFUNIT})
       set (INSTALL_PATH "$ENV{PFUNIT}")
@@ -94,9 +94,9 @@ endif()
 if (${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel")
 
 if (UNIX)
-   execute_process (COMMAND ifort --version 
+   execute_process (COMMAND ifort --version
 		    OUTPUT_VARIABLE INTEL_COMPILER_VERSION)
-			   string (REGEX MATCH "([0-9]+)" 
+			   string (REGEX MATCH "([0-9]+)"
                     NUM_VERSION ${INTEL_COMPILER_VERSION})
   if ("${NUM_VERSION}" STREQUAL "13")
         add_definitions(-DINTEL_13)
@@ -121,7 +121,7 @@ endif ()
       endif()
     endif()
 
-    add_definitions(-DIntel)
+    add_definitions(-DINTEL)
     if (WIN32)
         set(CMAKE_Fortran_FLAGS
             "${CMAKE_Fortran_FLAGS_DEBUG} -Od -check:uninit -check:bounds -traceback -assume:realloc_lhs ${CMAKE_Fortran_FLAGS}"
@@ -170,7 +170,7 @@ elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Cray)
     endif()
 
     # Use Cray
-    add_definitions(-DCray)
+    add_definitions(-DCRAY)
     add_definitions(-DSTRINGIFY_SIMPLE)
     set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS_DEBUG} -G0 -Rb ${CMAKE_Fortran_FLAGS}")
     set(OPENMP_FLAGS " ")

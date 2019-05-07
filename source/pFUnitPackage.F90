@@ -7,24 +7,24 @@
 !! <BriefDescription>
 !!
 !! @author
-!! Tom Clune, NASA/GSFC 
+!! Tom Clune, NASA/GSFC
 !!
 !! @date
 !! 07 Nov 2013
-!! 
+!!
 !! @note <A note here.>
 !! <Or starting here...>
 !
 ! REVISION HISTORY:
 !
-! 07 Nov 2013 - Added the prologue for the compliance with Doxygen. 
+! 07 Nov 2013 - Added the prologue for the compliance with Doxygen.
 !
 !-------------------------------------------------------------------------------
 !
 ! This module packages pFUnit entities while simultaneously inserting
 ! a prefix on all names.  Some developers may provide this explicit
 ! naming convention.  Others may choose to use the vanilla pFUnit module that
-! has no such prefix.   
+! has no such prefix.
 !
 ! The default prefix is "pf_", but just edit the #define below to suit
 ! your own preference.
@@ -43,7 +43,7 @@
 ! To get round these issues the "pf_" prefix is hard coded.
 
 #define WORD(word) word
-#ifndef Cray
+#ifndef CRAY
 #define RENAME(item) WORD(PFUNIT_PREFIX)item => item
 #else
 #define RENAME(item) WORD(pf_)item => item

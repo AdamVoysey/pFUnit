@@ -11,7 +11,7 @@
 !!
 !! @date
 !! 2014 July
-!! 
+!!
 !! @note Set up a test failure and feed it to an XML-based printer so
 !! that we can test its output. Use command line call (via "system")
 !! to try to find "xmllint," and if available, use it to validate the
@@ -60,7 +60,7 @@ contains
       use TestResult_mod, only: TestResult, newTestResult
       use XmlPrinter_mod, only: XmlPrinter, newXmlPrinter
 
-#ifdef Intel
+#ifdef INTEL
       use ifport, only: system
 #endif
 
@@ -71,7 +71,7 @@ contains
       character(len=200) :: fileName, suiteName, command, &
            xsdPath, outFile, errMsg
 
-#ifdef PGI
+#ifndef INTEL
       interface
          integer function system(str) bind(c)
             character(len=*), intent(in) :: str
@@ -106,7 +106,7 @@ contains
       ! Validate the file against the de facto JUnit xsd.
       ! If xmlint not found, just move on quietly.
       command = 'xmllint --version > /dev/null 2>&1'
-#if defined(NAG) || defined(IBM) || defined(Cray)
+#if defined(NAG) || defined(IBM) || defined(CRAY)
       ! Fortran 2008 compliant version.
       call execute_command_line(command,exitstat=stat)
 #else
@@ -115,7 +115,7 @@ contains
       if (stat == 0) then
          command = 'xmllint --noout --nowarning --schema ' // trim(xsdPath) &
               // ' ' // trim(fileName) // ' 2> ' // outFile
-#if defined(NAG) || defined(IBM) || defined(Cray)
+#if defined(NAG) || defined(IBM) || defined(CRAY)
          ! Fortran 2008 compliant version.
          call execute_command_line(command,exitstat=stat)
 #else
@@ -146,10 +146,10 @@ contains
      integer :: iostat, xmlUnit, iExpectedLine
 
      character(len=100) :: xmlFileLine
-     character(len=100), dimension(9) :: expected 
+     character(len=100), dimension(9) :: expected
 
      expected=(/ character(len=100) :: &
-#if !defined( PGI ) && !defined( Cray )
+#if !defined( PGI ) && !defined( CRAY )
 '<testsuite name="suitename[[]]''''" errors="0" failures="2" tests="0" time=".0000">', &
 #else
 '<testsuite name="suitename[[]]''''" errors="0" failures="2" tests="0"&

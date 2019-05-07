@@ -9,10 +9,8 @@ MOD_DIR     =$(TOP)/source
 # Set the required file extensions.
 include $(INCLUDE_DIR)/extensions.mk
 
-COMPILER_ = $(shell echo $(COMPILER) | tr a-z A-Z )
-
 # Include the compiler-specific options.
-include $(INCLUDE_DIR)/$(COMPILER_).mk
+include $(INCLUDE_DIR)/$(COMPILER).mk
 
 FFLAGS += $I$(INCLUDE_DIR)
 

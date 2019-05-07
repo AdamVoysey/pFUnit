@@ -39,9 +39,6 @@ endif
 F90_PP_ONLY = -E
 F90_PP_OUTPUT = >
 
-CPPFLAGS +=-DIntel
-FPPFLAGS +=-DIntel
-
 # Check if the version of the compiler is 13
 
 ifneq ($(version13),)
