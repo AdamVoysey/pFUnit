@@ -7,17 +7,17 @@
 !! <BriefDescription>
 !!
 !! @author
-!! Tom Clune, NASA/GSFC 
+!! Tom Clune, NASA/GSFC
 !!
 !! @date
 !! 07 Nov 2013
-!! 
+!!
 !! @note <A note here.>
 !! <Or starting here...>
 !
 ! REVISION HISTORY:
 !
-! 07 Nov 2013 - Added the prologue for the compliance with Doxygen. 
+! 07 Nov 2013 - Added the prologue for the compliance with Doxygen.
 !
 !-------------------------------------------------------------------------------
 
@@ -51,18 +51,23 @@ contains
 
    function newTestRunner_default() result(runner)
 !mlr-      use iso_fortran_env, only: OUTPUT_UNIT
+      implicit none
       type (TestRunner) :: runner
+      runner = TestRunner()
       allocate(runner%extListeners(0))
    end function newTestRunner_default
 
    function newTestRunner_unit(extListeners) result(runner)
+      implicit none
       type(ListenerPointer), intent(in) :: extListeners(:)
       type (TestRunner) :: runner
+      runner = TestRunner()
       allocate(runner%extListeners(size(extListeners)), source=extListeners)
    end function newTestRunner_unit
 
    function createTestResult(this) result(tstResult)
       use TestResult_mod
+      implicit none
       class (TestRunner), intent(inout) :: this
       type (TestResult) :: tstResult
 
@@ -76,12 +81,12 @@ contains
       use TestCase_mod
       use TestResult_mod
       use ParallelContext_mod
-
+      implicit none
       type (TestResult) :: result
       class (TestRunner), target, intent(inout) :: this
       class (Test), intent(inout) :: aTest
       class (ParallelContext), intent(in) :: context
-      
+
       integer :: clockStart
       integer :: clockStop
       integer :: clockRate
@@ -119,11 +124,13 @@ contains
 ! addition to other listeners added above.
 !
     subroutine startTest(this, testName)
+       implicit none
        class (TestRunner), intent(inout) :: this
        character(len=*), intent(in) :: testName
     end subroutine startTest
 
     subroutine endTest(this, testName)
+       implicit none
        class (TestRunner), intent(inout) :: this
        character(len=*), intent(in) :: testName
     end subroutine endTest
@@ -136,6 +143,7 @@ contains
 
     subroutine addFailure(this, testName, exceptions)
        use Exception_mod
+       implicit none
        class (TestRunner), intent(inout) :: this
        character(len=*), intent(in) :: testName
        type (Exception), intent(in) :: exceptions(:)

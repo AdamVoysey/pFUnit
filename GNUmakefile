@@ -115,37 +115,37 @@ F90_VENDOR ?=GNU
 
 ifneq (,$(findstring $(F90), ifort gfortran nag nagfor pgfortran xlf))
   ifeq ($(F90),ifort)
-     COMPILER=INTEL
+     COMPILER_=INTEL
   else ifeq ($(F90),gfortran)
-     COMPILER=GNU
+     COMPILER_=GNU
   else ifeq ($(F90),nagfor)
-     COMPILER=NAG
+     COMPILER_=NAG
   else ifeq ($(F90),pgfortran)
-     COMPILER=PGI
+     COMPILER_=PGI
   else ifneq (,$(findstring $(F90),xlf))
-     COMPILER=IBM
+     COMPILER_=IBM
   else
-     COMPILER=UNKNOWN
+     COMPILER_=UNKNOWN
   endif
 # Override F90_VENDOR with COMPILER
-	F90_VENDOR=$(COMPILER)
+	F90_VENDOR=$(COMPILER_)
 else # use F90_VENDOR to specify
   ifneq (,$(findstring $(F90_VENDOR),INTEL Intel intel ifort))
-    COMPILER=INTEL
+    COMPILER_=INTEL
   else ifneq (,$(findstring $(F90_VENDOR),GNU gnu gfortran GFortran GFORTRAN))
-    COMPILER=GNU
+    COMPILER_=GNU
   else ifneq (,$(findstring $(F90_VENDOR),nag NAG nagfor))
-    COMPILER=NAG
+    COMPILER_=NAG
   else ifneq (,$(findstring $(F90_VENDOR),pgi PGI pgfortran))
-    COMPILER=PGI
+    COMPILER_=PGI
   else ifneq (,$(findstring $(F90_VENDOR),ibm IBM xlf XLF))
-    COMPILER=IBM
+    COMPILER_=IBM
   else ifneq (,$(findstring $(F90_VENDOR),cray CRAY cce CCE))
-    COMPILER=CRAY
+    COMPILER_=CRAY
   endif
 endif
 
-COMPILER = $(shell echo $(COMPILER) | tr '[:lower:]' '[:upper:]' )
+COMPILER = $(shell echo $(COMPILER_) | tr '[:lower:]' '[:upper:]' )
 
 # F90_VENDOR is no longer needed after this point.  We keep it around
 # until we can verify that it's not needed in subdirectories or for

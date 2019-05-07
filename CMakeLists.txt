@@ -172,8 +172,12 @@ elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Cray)
     # Use Cray
     add_definitions(-DCRAY)
     add_definitions(-DSTRINGIFY_SIMPLE)
+if (OPENMP)
     set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS_DEBUG} -G0 -Rb ${CMAKE_Fortran_FLAGS}")
-    set(OPENMP_FLAGS " ")
+    set(OPENMP_FLAGS "-homp")
+else()
+    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS_DEBUG} -G0 -Rb ${CMAKE_Fortran_FLAGS} -hnoomp")
+endif()
 
 else()
 
