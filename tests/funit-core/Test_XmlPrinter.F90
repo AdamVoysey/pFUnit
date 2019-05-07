@@ -52,19 +52,6 @@ contains
    end function suite
 
    subroutine testValidXml()
-<<<<<<< HEAD:tests/Test_XmlPrinter.F90
-      use Assert_mod, only: assertEqual
-      use Exception_mod, only: newException
-      use TestCase_mod
-      use SimpleTestCase_mod, only: SimpleTestCase
-      use SurrogateTestCase_mod
-      use TestResult_mod, only: TestResult, newTestResult
-      use XmlPrinter_mod, only: XmlPrinter, newXmlPrinter
-
-#ifdef INTEL
-      use ifport, only: system
-#endif
-=======
       use PF_Assert, only: assertEqual
       use PF_Exception, only: Exception
       use PF_ExceptionList
@@ -73,7 +60,6 @@ contains
       use PF_SurrogateTestCase
       use PF_TestResult, only: TestResult, TestResult
       use PF_XmlPrinter, only: XmlPrinter, newXmlPrinter
->>>>>>> f49ea70eb81843eb9dcaf9a58d129488589c0086:tests/funit-core/Test_XmlPrinter.F90
 
       type (TestResult) :: aResult
       type (SimpleTestCase), target :: aTest, aTest2
@@ -81,18 +67,7 @@ contains
       integer :: iostat, stat, cmdstat, xmlUnit, outUnit
       character(len=200) :: fileName, suiteName, command, &
            xsdPath, outFile, errMsg
-<<<<<<< HEAD:tests/Test_XmlPrinter.F90
-
-#ifndef INTEL
-      interface
-         integer function system(str) bind(c)
-            character(len=*), intent(in) :: str
-         end function system
-      end interface
-#endif
-=======
       type (ExceptionList) :: list
->>>>>>> f49ea70eb81843eb9dcaf9a58d129488589c0086:tests/funit-core/Test_XmlPrinter.F90
 
       fileName = 'test.xml'
       suiteName = 'suitename<<>>""'
@@ -124,25 +99,11 @@ contains
       ! Validate the file against the de facto JUnit xsd.
       ! If xmlint not found, just move on quietly.
       command = 'xmllint --version > /dev/null 2>&1'
-<<<<<<< HEAD:tests/Test_XmlPrinter.F90
-#if defined(NAG) || defined(IBM) || defined(CRAY)
-      ! Fortran 2008 compliant version.
-      call execute_command_line(command,exitstat=stat)
-#else
-      stat = system(command)
-#endif
-      if (stat == 0) then
-         command = 'xmllint --noout --nowarning --schema ' // trim(xsdPath) &
-              // ' ' // trim(fileName) // ' 2> ' // outFile
-#if defined(NAG) || defined(IBM) || defined(CRAY)
-         ! Fortran 2008 compliant version.
-=======
       call execute_command_line(command,exitstat=stat,cmdstat=cmdstat)
 
       if (stat == 0) then
          command = 'xmllint --noout --nowarning --schema ' // trim(xsdPath) &
               // ' ' // trim(fileName) // ' 2> ' // trim(outFile)
->>>>>>> f49ea70eb81843eb9dcaf9a58d129488589c0086:tests/funit-core/Test_XmlPrinter.F90
          call execute_command_line(command,exitstat=stat)
          if(stat /= 0) then
             open(newunit=outUnit, file=outFile, iostat=iostat, &
@@ -172,11 +133,7 @@ contains
      character(len=100), dimension(9) :: expected
 
      expected=(/ character(len=100) :: &
-<<<<<<< HEAD:tests/Test_XmlPrinter.F90
-#if !defined( PGI ) && !defined( CRAY )
-=======
 #ifndef PGI
->>>>>>> f49ea70eb81843eb9dcaf9a58d129488589c0086:tests/funit-core/Test_XmlPrinter.F90
 '<testsuite name="suitename[[]]''''" errors="0" failures="2" tests="0" time=".0000">', &
 #else
 '<testsuite name="suitename[[]]''''" errors="0" failures="2" tests="0"&
