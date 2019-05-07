@@ -220,7 +220,7 @@ error may appear on the first execution.
 
 3\. Execute make as follows.
 
-    $ make tests MPI=YES 
+    $ make tests MPI=YES
 
 4\. At this point an MPI-enabled pFUnit object library is in the source
 directory, along with a large number of Fortran module files.
@@ -238,7 +238,7 @@ similar to that for other paradigms.
 
 3\. To compile for OPENMP support execute make as follows.
 
-    $ make tests OPENMP=YES 
+    $ make tests OPENMP=YES
 
 4\. At this point the OPENMP-enabled pFUnit is ready to be installed.
 
@@ -272,7 +272,7 @@ Or to make a reference manual:
     $ make documentation/pFUnit2-ReferenceManual.pdf
 
 To select a specific version of Doxygen, please set the DOXYGEN
-environment variable as in the Configuration section above. You 
+environment variable as in the Configuration section above. You
 may wish to do this if your code uses CamelCase names as current
 versions of Doxygen (1.8.5) do not respect this convention for
 Fortran.
@@ -401,7 +401,7 @@ suite module to testSuites.inc, as follows.
     ! Add a test suite to the build.
     ADD_TEST_SUITE(helloWorld_suite)
 
-A preprocessor input file contains tests and is a 
+A preprocessor input file contains tests and is a
 Fortran free-format file with directives, for example:
 
 ```fortran
@@ -468,7 +468,7 @@ Generally pFUnit development is performed in the build directory
 structure. Care should be taken to make clean or distclean in between
 configuration changes. As stated above, it is best to set `INSTALL_DIR`
 and `make install` pFUnit to another directory that can be placed in a
-user's paths. 
+user's paths.
 
 ## Feedback and bugs
 
@@ -492,7 +492,7 @@ user's paths.
    pFUnit heriarchy, please try setting the COMPILER environment variable
    on the make command line. For example:
 
-        $ make all COMPILER=Intel
+        $ make all COMPILER=INTEL
 
 3. If you wish to see the intermediate files, use the target .PRECIOUS
    in the makefile to keep them from being deleted. For example:
@@ -526,7 +526,7 @@ strongly recommend upgrading to the latest version possible.
 To make pFUnit work with Intel Fortran Version 13, please ensure that
 `-DINTEL_13` is passed to the compiler when building or using
 pFUnit. In the build process for pFUnit, this is added to the make
-variables CPPFLAGS and FPPFLAGS. 
+variables CPPFLAGS and FPPFLAGS.
 
 ## Acknowledgments
 

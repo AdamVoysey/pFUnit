@@ -115,37 +115,50 @@ F90_VENDOR ?=GNU
 
 ifneq (,$(findstring $(F90), ifort gfortran nag nagfor pgfortran xlf))
   ifeq ($(F90),ifort)
-     COMPILER_=INTEL
+     COMPILER=INTEL
   else ifeq ($(F90),gfortran)
-     COMPILER_=GNU
+     COMPILER=GNU
   else ifeq ($(F90),nagfor)
-     COMPILER_=NAG
+     COMPILER=NAG
   else ifeq ($(F90),pgfortran)
-     COMPILER_=PGI
+     COMPILER=PGI
   else ifneq (,$(findstring $(F90),xlf))
-     COMPILER_=IBM
+     COMPILER=IBM
   else
-     COMPILER_=UNKNOWN
+     COMPILER=UNKNOWN
   endif
 # Override F90_VENDOR with COMPILER
-	F90_VENDOR=$(COMPILER_)
-else # use F90_VENDOR to specify
-  ifneq (,$(findstring $(F90_VENDOR),INTEL Intel intel ifort))
-    COMPILER_=INTEL
-  else ifneq (,$(findstring $(F90_VENDOR),GNU gnu gfortran GFortran GFORTRAN))
-    COMPILER_=GNU
-  else ifneq (,$(findstring $(F90_VENDOR),nag NAG nagfor))
-    COMPILER_=NAG
-  else ifneq (,$(findstring $(F90_VENDOR),pgi PGI pgfortran))
-    COMPILER_=PGI
-  else ifneq (,$(findstring $(F90_VENDOR),ibm IBM xlf XLF))
-    COMPILER_=IBM
-  else ifneq (,$(findstring $(F90_VENDOR),cray CRAY cce CCE))
-    COMPILER_=CRAY
-  endif
+	F90_VENDOR=$(COMPILER)
 endif
 
-COMPILER = $(shell echo $(COMPILER_) | tr '[:lower:]' '[:upper:]' )
+F90_VENDOR_ = $(shell echo $(F90_VENDOR) | tr '[:lower:]' '[:upper:]' )
+
+# use F90_VENDOR to specify
+ifneq (,$(findstring $(F90_VENDOR_),INTEL IFORT))
+  COMPILER=INTEL
+else ifneq (,$(findstring $(F90_VENDOR_),GNU GFORTRAN))
+  COMPILER=GNU
+else ifneq (,$(findstring $(F90_VENDOR_),NAG NAGFOR))
+  COMPILER=NAG
+else ifneq (,$(findstring $(F90_VENDOR_),PGI PGFORTRAN))
+  COMPILER=PGI
+else ifneq (,$(findstring $(F90_VENDOR_),IBM XLF))
+  COMPILER=IBM
+else ifneq (,$(findstring $(F90_VENDOR_),CRAY CCE))
+  COMPILER=CRAY
+else
+  COMPILER=UNKNOWN
+endif
+
+ifndef COMPILER
+  $(error Failed to correctly detect compiler. Have you set $$F90 and $$F90_VENDOR \
+    correctly?)
+endif
+
+ifeq ($(COMPILER),UNKNOWN)
+  $(error Failed to correctly detect compiler. Have you set $$F90 and $$F90_VENDOR \
+    correctly?)
+endif
 
 # F90_VENDOR is no longer needed after this point.  We keep it around
 # until we can verify that it's not needed in subdirectories or for
